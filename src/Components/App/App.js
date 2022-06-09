@@ -21,6 +21,7 @@ class App extends React.Component {
     this.updatePlaylistName = this.updatePlaylistName.bind(this);
     this.savePlaylist = this.savePlaylist.bind(this);
     this.search = this.search.bind(this);
+    this.updateSearchTerms = this.updateSearchTerms.bind(this);
   }
   addTrack(track) {
     let tracks = this.state.playlistTracks;
@@ -46,11 +47,12 @@ class App extends React.Component {
       });
     });
   }
-  search(term) {
-    Spotify.search(term).then(searchResults => {
-      this.setState({searchResults: searchResults});
+  updateSearchTerms(terms) {
+    this.setState({
+      searchTerms: terms
     });
   }
+  
   render() {
     return (
       <div>

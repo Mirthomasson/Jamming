@@ -6,9 +6,6 @@ class Track extends React.Component {
         super(props);
         this.addTrack = this.addTrack.bind(this);
         this.removeTrack = this.removeTrack.bind(this);
-        this.state = {play: false};
-        this.audio = new Audio(this.props.track.audio);
-        this.togglePlay = this.togglePlay.bind(this);
     }
     renderAction() {
         if(this.props.isRemoval) {
@@ -23,24 +20,10 @@ class Track extends React.Component {
     removeTrack() {
         this.props.onRemove(this.props.track);
     }
-
-  togglePlay() {
-    this.setState({ play: !this.state.play });
-    if (this.state.play) {
-      this.audio.play();
-    } else {
-      this.audio.pause();
-    }
-}
     
     render() {
         return (
             <div className="Track">
-                 <button className="play" onClick={this.togglePlay}>
-                     <img src={this.props.track.cover}
-                          alt={this.props.track.album}
-                          className="cover"/>
-                 </button>
                 <div className="Track-information">
                     <h3>{this.props.track.name}</h3>
                     <p>{this.props.track.artist} | {this.props.track.album}</p>

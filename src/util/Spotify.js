@@ -2,6 +2,7 @@ const clientId = 'cb17de7f1400408e819d2caf80c5bf22';
 const redirectUri = 'http://mirs-jam.surge.sh';
 let accessToken;
 
+
 const Spotify = {
     getAccesToken() {
         if(accessToken) {
@@ -40,8 +41,7 @@ const Spotify = {
                     artist: track.artists[0].name,
                     album: track.album.name,
                     uri: track.uri,
-                    cover: track.album.images[2].url,
-                    audio: track.preview_url
+                    preview: track.preview_url,
                 }));
             });
         },

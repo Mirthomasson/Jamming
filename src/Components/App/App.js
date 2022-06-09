@@ -6,7 +6,7 @@ import Spotify from '../../util/Spotify';
 
 import React from 'react';
 
-Spotify.getAccessToken();
+ Spotify.getAccessToken();
 
 class App extends React.Component {
   constructor(props) {

@@ -39,18 +39,33 @@ class App extends React.Component {
   updatePlaylistName(name) {
     this.setState({playlistName: name});
   }
-  savePlaylist() {
+
+  async savePlaylist() {
     const trackURIs = this.state.playlistTracks.map(track => track.uri);
-    Spotify.savePlaylist(this.state.playlistName, trackURIs).then(() => {
-      this.setState({playlistName: 'New Playlist',
-    playlistTracks: []
-      });
+    const playlistName = this.state.playlistName;
+    await Spotify.savePlaylist(playlistName, trackURIs);
+    alert('Playlist saved!');
+    this.setState({
+      playlistName: 'New Playlist',
+      playlistTracks: []
     });
   }
+
+  async search() {
+    const newResults = await Spotify.search(this.state.searchTerms);
+    this.setState({
+      searchResults: newResults
+    });
+  }
+
   updateSearchTerms(terms) {
     this.setState({
       searchTerms: terms
     });
+  }
+  
+  componentDidMount() {
+    window.addEventListener('load', () => {Spotify.getAccessToken()});
   }
   
   render() {

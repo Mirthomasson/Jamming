@@ -11,7 +11,8 @@ const Spotify = {
         // Check for access token match
         const accessTokenMatch  = window.location.href.match(/access_token=([^&]*)/);
         const expiresInMatch = window.location.href.match(/expires_in=([^&]*)/);
-        if(accessTokenMatch && expiresInMatch) {
+
+        if (accessTokenMatch && expiresInMatch) {
             accessToken = accessTokenMatch[1];
             const expiresIn = Number(expiresInMatch[1]);
             // Clear parameters
@@ -23,9 +24,9 @@ const Spotify = {
             window.location = accessUrl;
          }
         },
+
         search(term) {
             const accessToken = Spotify.getAccesToken();
-
             return fetch(`https://api.spotify.com/v1/search?type=track&q=${term}`,
             {
                 headers: { Authorization: `Bearer ${accessToken}` }
@@ -41,10 +42,10 @@ const Spotify = {
                     artist: track.artists[0].name,
                     album: track.album.name,
                     uri: track.uri,
-                    preview: track.preview_url,
                 }));
             });
         },
+    
         savePlaylist(name, trackUris) {
             if(!name || !trackUris.length) {
                 return;

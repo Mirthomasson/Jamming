@@ -59,8 +59,8 @@ class App extends React.Component {
     this.setState({
       searchResults: searchResults
     });
-  });
-}
+});
+  }
 
   render() {
     return (

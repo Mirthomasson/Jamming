@@ -45,8 +45,8 @@ const Spotify = {
                 }));
             });
         },
-        savePlaylist(name, trackURIs) {
-            if(!name || !trackURIs.length) {
+        savePlaylist(name, trackUris) {
+            if(!name || !trackUris.length) {
                 return;
             }
             const accessToken = Spotify.getAccesToken();
@@ -69,7 +69,7 @@ const Spotify = {
                 {
                    headers: headers,
                    method: 'POST',
-                   body:  JSON.stringify({ uris: trackURIs })
+                   body:  JSON.stringify({ uris: trackUris })
                 });
                 });
             });

@@ -11,12 +11,8 @@ class App extends React.Component {
     super(props);
     
     this.state = {
-      searchTerms: '',
-      
       searchResults: [],
-    
       playlistName: 'New Playlist',
-    
       playlistTracks: []
     };
 
@@ -25,62 +21,46 @@ class App extends React.Component {
     this.updatePlaylistName = this.updatePlaylistName.bind(this);
     this.savePlaylist = this.savePlaylist.bind(this);
     this.search = this.search.bind(this);
-    this.updateSearchTerms = this.updateSearchTerms.bind(this);
-
   }
 
   addTrack(track) {
-    if (!this.state.playlistTracks.some(playlistTrack => playlistTrack.id === track.id)) {
-      let newPlaylistTracks = this.state.playlistTracks;
-      newPlaylistTracks.push(track);
-      this.setState({
-        playlistTracks: newPlaylistTracks
-      });
+    let tracks = this.state.playlistTracks;
+    if (tracks.find(savedTrack => savedTrack.id === track.id)) {
+      return;
     }
+
+    tracks.push(track);
+    this.setState({ playlistTracks: tracks });
   }
 
   removeTrack(track) {
-    const newTracks = this.state.playlistTracks.filter((playlistTrack) => {
-      return playlistTrack.id !== track.id;
-    });
-    this.setState({
-      playlistTracks: newTracks
-    });
+    let tracks = this.state.playlistTracks;
+      tracks = tracks.filter(currentTrack => currentTrack.id !== track.id);
+
+      this.setState({ playlistTracks: tracks });
   }
 
   updatePlaylistName(name) {
-    this.setState({
-      playlistName: name
-    });
+    this.setState({ playlistName: name });
   }
 
-  async savePlaylist() {
-    const trackURIs = this.state.playlistTracks.map(track => track.uri);
-    const playlistName = this.state.playlistName;
-    await Spotify.savePlaylist(playlistName, trackURIs);
-    alert('Playlist saved!');
+  savePlaylist() {
+    const trackUris = this.state.playlistTracks.map(track => track.uri);
+    Spotify.savePlaylist(this.state.playlistName, trackUris).then(() => {
     this.setState({
       playlistName: 'New Playlist',
       playlistTracks: []
-    });
-  }
+    })
+  })
+}
 
-  async search() {
-    const newResults = await Spotify.search(this.state.searchTerms);
+  search(term) {
+    Spotify.search(term).then(searchResults => {
     this.setState({
-      searchResults: newResults
+      searchResults: searchResults
     });
-  }
-
-  updateSearchTerms(terms) {
-    this.setState({
-      searchTerms: terms
-    });
-  }
-
-  componentDidMount() {
-    window.addEventListener('load', () => {Spotify.getAccessToken()});
-  }
+  });
+}
 
   render() {
     return (

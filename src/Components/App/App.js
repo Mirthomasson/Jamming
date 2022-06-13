@@ -18,6 +18,7 @@ class App extends React.Component {
 
     this.addTrack = this.addTrack.bind(this);
     this.removeTrack = this.removeTrack.bind(this);
+    this.getPlaylists = this.getPlaylists.bind(this);
     this.updatePlaylistName = this.updatePlaylistName.bind(this);
     this.savePlaylist = this.savePlaylist.bind(this);
     this.search = this.search.bind(this);
@@ -38,6 +39,12 @@ class App extends React.Component {
       tracks = tracks.filter(currentTrack => currentTrack.id !== track.id);
 
       this.setState({ playlistTracks: tracks });
+  }
+
+  getPlaylists() {
+    Spotify.getPlaylists().then(savedPlaylists => {
+      this.setState({savedPlaylists: savedPlaylists});
+    });
   }
 
   updatePlaylistName(name) {
@@ -65,7 +72,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <h1>Mir's<span className="highlight">Jams</span></h1>
+        <h1>Mir's<span className="highlight"> Jams</span></h1>
         <div className="App">
             <SearchBar 
             onSearch={this.search}
@@ -85,6 +92,9 @@ class App extends React.Component {
         </div>
       </div>
     );
+  }
+  componentDidMount() {
+    this.getPlaylists();
   }
 }
 

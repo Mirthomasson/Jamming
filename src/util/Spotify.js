@@ -1,4 +1,4 @@
-const clientId = 'cb17de7f1400408e819d2caf80c5bf22';
+const API_KEY = process.env.REACT_APP_JAMMING_API_KEY;
 const redirectUri = 'http://mirs-jam.surge.sh';
 let accessToken;
 
@@ -21,7 +21,7 @@ const Spotify = {
             return accessToken;
         } else {
             const accessUrl = 
-            `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectUri}`;
+            `https://accounts.spotify.com/authorize?client_id=${API_KEY}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectUri}`;
             window.location = accessUrl;
          }
         },
